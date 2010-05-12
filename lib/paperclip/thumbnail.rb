@@ -45,11 +45,12 @@ module Paperclip
       dst = Tempfile.new([@basename, @format].compact.join("."))
       dst.binmode
 
+      target_format = "#{@format.to_s}:" if @format
       command = <<-end_command
         #{ source_file_options }
         "#{ File.expand_path(src.path) }[0]"
         #{ transformation_command }
-        "#{ File.expand_path(dst.path) }"
+        #{ target_format }"#{ File.expand_path(dst.path) }"
       end_command
 
       begin
